@@ -32,34 +32,39 @@ async function checkUserSession() {
         return null;
     }
 }
-// Fragment auth.js dla rejestracji
-const signUp = async (email, password, username) => {
-    // 1. Pobierz token z hCaptchy
-    const captchaResponse = hcaptcha.getResponse();
+const loginForm = document.getElementById('login-form');
 
-    if (!captchaResponse) {
-        alert("Proszę potwierdzić, że nie jesteś robotem!");
-        return;
-    }
+if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('l-email').value;
+        const password = document.getElementById('l-password').value;
+        
+        // 1. Pobierz token z hCaptchy (pobierze go z aktywnego okienka)
+        const captchaResponse = hcaptcha.getResponse();
 
-    // 2. Wyślij do Supabase
-    const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-            captchaToken: captchaResponse, // <--- TO ROZWIĄŻE TWÓJ BŁĄD
-            data: {
-                username: username
+        if (!captchaResponse) {
+            alert("Proszę potwierdzić, że nie jesteś robotem!");
+            return;
+        }
+
+        // 2. Zaloguj z tokenem
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+            options: {
+                captchaToken: captchaResponse // <--- BRAKUJĄCY ELEMENT
             }
+        });
+
+        if (error) {
+            alert("Błąd logowania: " + error.message);
+            hcaptcha.reset(); 
+        } else {
+            window.location.href = 'profile.html';
         }
     });
-
-    if (error) {
-        alert("Błąd: " + error.message);
-        hcaptcha.reset(); // Resetuje obrazki przy błędzie
-    } else {
-        alert("Sukces! Sprawdź maila.");
-    }
 }
 // 2. Obsługa Rejestracji
 async function handleSignUp(email, password, username) {
