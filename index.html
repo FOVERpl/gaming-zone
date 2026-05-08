@@ -2,11 +2,13 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaming Zone - Strona Główna</title>
     <link rel="stylesheet" href="style.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-    <script src="auth.js"></script>
 </head>
 <body>
 
@@ -23,7 +25,6 @@
 
 <main>
     <section id="hero">
-        <div class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
         <h1>Witaj w Gaming Zone</h1>
         <p>Najlepsza społeczność graczy w sieci.</p>
     </section>
@@ -47,6 +48,11 @@
                 <input type="text" id="r-username" placeholder="Twoja Ksywka" required>
                 <input type="email" id="r-email" placeholder="E-mail" required>
                 <input type="password" id="r-password" placeholder="Hasło" required>
+                
+                <div class="h-captcha-wrapper" style="margin-bottom: 15px;">
+                    <div class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
+                </div>
+                
                 <button type="submit">Załóż konto</button>
             </form>
         </div>
@@ -54,14 +60,21 @@
 </main>
 
 <script src="auth.js"></script>
+
 <script>
-    // Prosty skrypt zakładek
+    // Skrypt zakładek (Tabs)
     function openTab(name) {
+        // Ukryj wszystkie treści zakładek
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        // Usuń klasę active ze wszystkich przycisków
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        
+        // Pokaż wybraną zakładkę
         document.getElementById(name).classList.add('active');
+        // Dodaj klasę active do klikniętego przycisku
         event.currentTarget.classList.add('active');
     }
 </script>
+
 </body>
 </html>
