@@ -1,7 +1,6 @@
 const SUPABASE_URL = 'https://tvjmddajptsuqqwwjaen.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_MNYsFqV_N6ieH5uEY_hbQQ_uI87EYkC';
 
-// Zmieniamy nazwę na _supabase, żeby uniknąć błędu "already declared"
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // 1. Sprawdzanie sesji
@@ -23,54 +22,31 @@ async function checkUserSession() {
 
 // 2. Obsługa Rejestracji
 async function handleSignUp(email, password, username) {
-    const widget = document.getElementById('captcha-register');
-    const captchaResponse = hcaptcha.getResponse(widget);
-
-    if (!captchaResponse) {
-        alert("Proszę potwierdzić hCaptcha!");
-        return;
-    }
-
     const { data, error } = await _supabase.auth.signUp({
         email,
         password,
         options: {
-            captchaToken: captchaResponse,
             data: { username: username }
         }
     });
 
     if (error) {
         alert("Błąd rejestracji: " + error.message);
-        hcaptcha.reset(widget);
     } else {
-        alert("Konto utworzone! Sprawdź e-mail.");
+        alert("Konto utworzone! Sprawdź e-mail, aby potwierdzić konto.");
     }
 }
 
 // 3. Obsługa Logowania
 async function handleLogin(email, password) {
-    const widget = document.getElementById('captcha-login');
-    const captchaResponse = hcaptcha.getResponse(widget);
-
-    if (!captchaResponse) {
-        alert("Proszę potwierdzić hCaptcha!");
-        return;
-    }
-
     const { error } = await _supabase.auth.signInWithPassword({
         email,
-        password,
-        options: {
-            captchaToken: captchaResponse
-        }
+        password
     });
 
     if (error) {
         alert("Błąd logowania: " + error.message);
-        hcaptcha.reset(widget);
     } else {
-        // Zamiast reload, idziemy na profil
         window.location.href = 'profile.html';
     }
 }
@@ -85,13 +61,11 @@ async function handleLogout() {
 document.addEventListener('DOMContentLoaded', async () => {
     const session = await checkUserSession();
 
-    // Logika przycisku wyloguj
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', handleLogout);
     }
 
-    // Wyświetlanie danych na profile.html
     if (session && document.getElementById('display-email')) {
         document.getElementById('display-email').innerText = session.user.email;
         const { data: profile } = await _supabase
@@ -102,7 +76,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (profile) document.getElementById('display-username').innerText = profile.username;
     }
 
-    // Event Listenery dla formularzy
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
