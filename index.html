@@ -6,7 +6,6 @@
     <title>Gaming Zone - Strona Główna</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </head>
 <body>
 
@@ -37,9 +36,6 @@
             <form id="login-form">
                 <input type="email" id="l-email" placeholder="E-mail" required>
                 <input type="password" id="l-password" placeholder="Hasło" required>
-                <div style="margin: 15px 0;">
-                    <div id="captcha-login" class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
-                </div>
                 <button type="submit">Zaloguj się</button>
             </form>
         </div>
@@ -49,9 +45,6 @@
                 <input type="text" id="r-username" placeholder="Twoja Ksywka" required>
                 <input type="email" id="r-email" placeholder="E-mail" required>
                 <input type="password" id="r-password" placeholder="Hasło" required>
-                <div style="margin: 15px 0;">
-                    <div id="captcha-register" class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
-                </div>
                 <button type="submit">Załóż konto</button>
             </form>
         </div>
@@ -65,10 +58,6 @@
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(name).classList.add('active');
         event.currentTarget.classList.add('active');
-        // Resetujemy obie captche przy przełączaniu, żeby uniknąć błędów
-        if (typeof hcaptcha !== 'undefined') {
-            hcaptcha.reset();
-        }
     }
 </script>
 </body>
