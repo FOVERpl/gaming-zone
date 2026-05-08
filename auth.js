@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://tvjmddajptsuqqwwjaen.supabase.co';
-const SUPABASE_KEY = 'TUTAJ_TWÓJ_KLUCZ_SB_PUBLISHABLE';
+const SUPABASE_KEY = 'sb_publishable_MNYsFqV_N6ieH5uEY_hbQQ_uI87EYkC';
 
 // To tworzy połączenie z Twoją bazą "strefa gier"
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
