@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Mój Profil - Gaming Zone</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Strona Główna</a>
+    </nav>
+
+    <div class="profile-container">
+        <h1>Twój Profil</h1>
+        <div id="user-info">
+            <p><strong>Email:</strong> <span id="display-email">Ładowanie...</span></p>
+            <p><strong>Twój Nick:</strong> <span id="display-username">Ładowanie...</span></p>
+        </div>
+        <button id="logout-btn" style="background-color: #ff4d4d; color: white; padding: 10px; border: none; cursor: pointer;">Wyloguj się</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/auth.js"></script>
+</body>
+</html>
