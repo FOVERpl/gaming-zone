@@ -1,13 +1,11 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaming Zone - Strona Główna</title>
     <link rel="stylesheet" href="style.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </head>
 <body>
@@ -35,28 +33,25 @@
             <button class="tab-btn" onclick="openTab('register')">Rejestracja</button>
         </div>
 
-<div id="login" class="tab-content active">
-    <form id="login-form">
-        <input type="email" id="l-email" placeholder="E-mail" required>
-        <input type="password" id="l-password" placeholder="Hasło" required>
-        
-        <div style="margin: 15px 0;">
-            <div class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
+        <div id="login" class="tab-content active">
+            <form id="login-form">
+                <input type="email" id="l-email" placeholder="E-mail" required>
+                <input type="password" id="l-password" placeholder="Hasło" required>
+                <div style="margin: 15px 0;">
+                    <div id="captcha-login" class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
+                </div>
+                <button type="submit">Zaloguj się</button>
+            </form>
         </div>
-        
-        <button type="submit">Zaloguj się</button>
-    </form>
-</div>
+
         <div id="register" class="tab-content">
             <form id="register-form">
                 <input type="text" id="r-username" placeholder="Twoja Ksywka" required>
                 <input type="email" id="r-email" placeholder="E-mail" required>
                 <input type="password" id="r-password" placeholder="Hasło" required>
-                
                 <div style="margin: 15px 0;">
-                    <div class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
+                    <div id="captcha-register" class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
                 </div>
-                
                 <button type="submit">Załóż konto</button>
             </form>
         </div>
@@ -64,19 +59,17 @@
 </main>
 
 <script src="auth.js"></script>
-
 <script>
-    // Obsługa przełączania zakładek
     function openTab(name) {
-        // Ukryj wszystkie zakładki
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        
-        // Pokaż wybraną
         document.getElementById(name).classList.add('active');
         event.currentTarget.classList.add('active');
+        // Resetujemy obie captche przy przełączaniu, żeby uniknąć błędów
+        if (typeof hcaptcha !== 'undefined') {
+            hcaptcha.reset();
+        }
     }
 </script>
-
 </body>
 </html>
