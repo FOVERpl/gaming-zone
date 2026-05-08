@@ -3,6 +3,17 @@ const SUPABASE_KEY = 'sb_publishable_MNYsFqV_N6ieH5uEY_hbQQ_uI87EYkC';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+
+
+
+
+
+
+
+
+
+
+
 // 1. Sprawdzanie sesji i ukrywanie/pokazywanie elementów
 async function checkUserSession() {
     const { data: { session } } = await supabaseClient.auth.getSession();
@@ -21,7 +32,35 @@ async function checkUserSession() {
         return null;
     }
 }
+// Fragment auth.js dla rejestracji
+const signUp = async (email, password, username) => {
+    // 1. Pobierz token z hCaptchy
+    const captchaResponse = hcaptcha.getResponse();
 
+    if (!captchaResponse) {
+        alert("Proszę potwierdzić, że nie jesteś robotem!");
+        return;
+    }
+
+    // 2. Wyślij do Supabase
+    const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+            captchaToken: captchaResponse, // <--- TO ROZWIĄŻE TWÓJ BŁĄD
+            data: {
+                username: username
+            }
+        }
+    });
+
+    if (error) {
+        alert("Błąd: " + error.message);
+        hcaptcha.reset(); // Resetuje obrazki przy błędzie
+    } else {
+        alert("Sukces! Sprawdź maila.");
+    }
+}
 // 2. Obsługa Rejestracji
 async function handleSignUp(email, password, username) {
     const { data, error } = await supabaseClient.auth.signUp({ email, password });
