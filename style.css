@@ -51,6 +51,29 @@ button[type="submit"] { width: 100%; padding: 10px; background: #00d4ff; border:
     color: #00d4ff;
     margin-top: 20px;
 }
+.btn-logout {
+    background-color: #ff4444;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
 
+.btn-logout:hover {
+    background-color: #cc0000;
+}
+
+.profile-box {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+    color: white;
+}
 
 
