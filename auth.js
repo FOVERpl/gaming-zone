@@ -39,11 +39,8 @@ async function handleSignUp(email, password, username) {
 
 // 3. Obsługa Logowania
 async function handleLogin(email, password) {
-    const { error } = await _supabase.auth.signInWithPassword({
-        email,
-        password
-    });
-
+    const { error } = await _supabase.auth.signInWithPassword({ email, password });
+    
     if (error) {
         alert("Błąd logowania: " + error.message);
     } else {
@@ -51,7 +48,7 @@ async function handleLogin(email, password) {
     }
 }
 
-// 4. Wylogowanie
+// 4. Obsługa Wylogowania
 async function handleLogout() {
     await _supabase.auth.signOut();
     window.location.href = "index.html";
@@ -61,21 +58,11 @@ async function handleLogout() {
 document.addEventListener('DOMContentLoaded', async () => {
     const session = await checkUserSession();
 
+    // Przycisk wyloguj (jeśli istnieje na stronie)
     const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', handleLogout);
-    }
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
 
-    if (session && document.getElementById('display-email')) {
-        document.getElementById('display-email').innerText = session.user.email;
-        const { data: profile } = await _supabase
-            .from('profiles')
-            .select('username')
-            .eq('id', session.user.id)
-            .single();
-        if (profile) document.getElementById('display-username').innerText = profile.username;
-    }
-
+    // Formularz Logowania
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -87,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    // Formularz Rejestracji
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
