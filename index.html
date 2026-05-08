@@ -35,14 +35,18 @@
             <button class="tab-btn" onclick="openTab('register')">Rejestracja</button>
         </div>
 
-        <div id="login" class="tab-content active">
-            <form id="login-form">
-                <input type="email" id="l-email" placeholder="E-mail" required>
-                <input type="password" id="l-password" placeholder="Hasło" required>
-                <button type="submit">Zaloguj się</button>
-            </form>
+<div id="login" class="tab-content active">
+    <form id="login-form">
+        <input type="email" id="l-email" placeholder="E-mail" required>
+        <input type="password" id="l-password" placeholder="Hasło" required>
+        
+        <div style="margin: 15px 0;">
+            <div class="h-captcha" data-sitekey="97b80c1e-ecd2-4848-975a-fc0ef40cb0aa"></div>
         </div>
-
+        
+        <button type="submit">Zaloguj się</button>
+    </form>
+</div>
         <div id="register" class="tab-content">
             <form id="register-form">
                 <input type="text" id="r-username" placeholder="Twoja Ksywka" required>
