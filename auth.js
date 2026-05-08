@@ -59,6 +59,49 @@ async function handleLogin(email, password) {
         window.location.reload(); // Odśwież stronę po zalogowaniu
     }
 }
+// FUNKCJA WYLOGOWANIA
+async function handleLogout() {
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) {
+        alert("Błąd podczas wylogowywania: " + error.message);
+    } else {
+        alert("Wylogowano pomyślnie!");
+        window.location.href = "index.html"; // Powrót na główną
+    }
+}
+
+// OBSŁUGA PRZYCISKU WYLOGUJ I WYŚWIETLANIA DANYCH
+document.addEventListener('DOMContentLoaded', async () => {
+    // Sprawdź czy jesteśmy na podstronie profilu
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+
+        // Pobierz dane zalogowanego użytkownika
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        
+        if (session) {
+            document.getElementById('display-email').innerText = session.user.email;
+            
+            // Pobierz nick z tabeli 'profiles'
+            const { data: profile } = await supabaseClient
+                .from('profiles')
+                .select('username')
+                .eq('id', session.user.id)
+                .single();
+
+            if (profile) {
+                document.getElementById('display-username').innerText = profile.username;
+            }
+        } else {
+            // Jeśli ktoś wejdzie na profil bez zalogowania, wyrzuć go na główną
+            window.location.href = "index.html";
+        }
+    }
+});
+
+
+
 
 // --- EVENT LISTENERY (Obsługa formularzy na stronie głównej) ---
 
