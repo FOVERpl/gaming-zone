@@ -20,20 +20,22 @@ async function checkUserSession() {
     }
 }
 
-// 2. Obsługa Rejestracji
-async function handleSignUp(email, password, username) {
-    const { data, error } = await _supabase.auth.signUp({
-        email,
-        password,
-        options: {
-            data: { username: username }
-        }
-    });
-
+// 3. Obsługa Logowania
+async function handleLogin(email, password) {
+    const { error } = await _supabase.auth.signInWithPassword({ email, password });
+    
     if (error) {
-        alert("Błąd rejestracji: " + error.message);
+        alert("Błąd logowania: " + error.message);
     } else {
-        alert("Konto utworzone! Sprawdź e-mail, aby potwierdzić konto.");
+        // ZAMIAST: window.location.href = 'profile.html';
+        // ROBIMY TO:
+        const authContainer = document.querySelector('.auth-container');
+        if (authContainer) {
+            authContainer.style.display = 'none'; // Ukrywa okno po zalogowaniu
+        }
+        
+        // Odświeżamy widoczność paska nawigacji (żeby pokazał się "MÓJ PROFIL")
+        await checkUserSession(); 
     }
 }
 
