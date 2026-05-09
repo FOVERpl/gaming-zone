@@ -57,27 +57,28 @@ async function handleLogout() {
 // --- GŁÓWNA LOGIKA ---
 document.addEventListener('DOMContentLoaded', async () => {
     const session = await checkUserSession();
+ // A. Obsługa wyświetlania danych na stronie profilu (profile.html)
+if (session) {
+    const emailSpan = document.getElementById('display-email');
+    // TUTAJ BYŁ BŁĄD: zmieniono 'dispaly-username' na 'display-username'
+    const usernameSpan = document.getElementById('display-username');
 
-    // A. Obsługa wyświetlania danych na stronie profilu (profile.html)
-    if (session) {
-        const emailSpan = document.getElementById('display-email');
-        const usernameSpan = document.getElementById('display-username');
-
-        if (emailSpan) {
-            emailSpan.innerText = session.user.email;
-        }
-
-        if (usernameSpan) {
-            // Dane 'username' zapisane podczas rejestracji lądują w user_metadata
-            const nick = session.user.user_metadata?.username || "Brak nicku";
-            usernameSpan.innerText = nick;
-        }
-    } else {
-        // Jeśli nie ma sesji, a użytkownik próbuje wejść na profil - wyrzuć go na główną
-        if (window.location.pathname.includes('profile.html')) {
-            window.location.href = 'index.html';
-        }
+    if (emailSpan) {
+        emailSpan.innerText = session.user.email;
     }
+
+    if (usernameSpan) {
+        // Pobieramy dane bezpośrednio z tabeli 'profiles' (tam gdzie jest "przemek")
+        const { data: profile } = await _supabase
+            .from('profiles')
+            .select('username')
+            .eq('id', session.user.id)
+            .single();
+
+        // Ustawiamy nick z bazy, a jeśli go tam nie ma, to z metadanych sesji
+        usernameSpan.innerText = profile?.username || session.user.user_metadata?.username || "Brak nicku";
+    }
+}
 
     // B. Przycisk wyloguj
     const logoutBtn = document.getElementById('logout-btn');
