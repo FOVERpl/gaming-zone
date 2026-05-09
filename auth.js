@@ -3,7 +3,7 @@ const SUPABASE_KEY = 'sb_publishable_MNYsFqV_N6ieH5uEY_hbQQ_uI87EYkC';
 
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// 1. Sprawdzanie sesji
+// 1. Sprawdzanie sesji użytkownika
 async function checkUserSession() {
     const { data: { session } } = await _supabase.auth.getSession();
     const profileLink = document.getElementById('profile-link');
@@ -57,28 +57,39 @@ async function handleLogout() {
 // --- GŁÓWNA LOGIKA ---
 document.addEventListener('DOMContentLoaded', async () => {
     const session = await checkUserSession();
- // A. Obsługa wyświetlania danych na stronie profilu (profile.html)
-if (session) {
-    const emailSpan = document.getElementById('display-email');
-    // TUTAJ BYŁ BŁĄD: zmieniono 'dispaly-username' na 'display-username'
-    const usernameSpan = document.getElementById('display-username');
 
-    if (emailSpan) {
-        emailSpan.innerText = session.user.email;
+    // A. Obsługa wyświetlania danych na stronie profilu (profile.html)
+    if (session) {
+        const emailSpan = document.getElementById('display-email');
+        // POPRAWIONO LITERÓWKĘ: z 'dispaly-username' na 'display-username'
+        const usernameSpan = document.getElementById('display-username');
+
+        if (emailSpan) {
+            emailSpan.innerText = session.user.email;
+        }
+
+        if (usernameSpan) {
+            try {
+                // Pobieramy dane z tabeli 'profiles' (tam gdzie jest "przemek" - image_ad4d5a.png)
+                const { data: profile, error } = await _supabase
+                    .from('profiles')
+                    .select('username')
+                    .eq('id', session.user.id)
+                    .single();
+
+                // Wyświetlamy nick z bazy danych, a jeśli nie ma go w tabeli, bierzemy z metadanych lub wyświetlamy "Brak nicku"
+                usernameSpan.innerText = profile?.username || session.user.user_metadata?.username || "Brak nicku";
+            } catch (err) {
+                console.error("Błąd bazy danych:", err);
+                usernameSpan.innerText = session.user.user_metadata?.username || "Brak nicku";
+            }
+        }
+    } else {
+        // Jeśli nie ma sesji, a użytkownik jest na profile.html, wyrzuć go na stronę główną
+        if (window.location.pathname.includes('profile.html')) {
+            window.location.href = 'index.html';
+        }
     }
-
-    if (usernameSpan) {
-        // Pobieramy dane bezpośrednio z tabeli 'profiles' (tam gdzie jest "przemek")
-        const { data: profile } = await _supabase
-            .from('profiles')
-            .select('username')
-            .eq('id', session.user.id)
-            .single();
-
-        // Ustawiamy nick z bazy, a jeśli go tam nie ma, to z metadanych sesji
-        usernameSpan.innerText = profile?.username || session.user.user_metadata?.username || "Brak nicku";
-    }
-}
 
     // B. Przycisk wyloguj
     const logoutBtn = document.getElementById('logout-btn');
