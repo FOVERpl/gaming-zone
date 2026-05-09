@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gaming Zone - Strona Główna</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Biblioteka Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" type="image/x-icon" href="icona.png">
+
+
 </head>
 <body>
 
 <nav>
     <div class="logo">GAMING-ZONE</div>
-    <ul>
+    <ul class="nav-links">
         <li><a href="index.html">Główna</a></li>
         <li><a href="nowosci.html">Nowości</a></li>
         <li><a href="informacje.html">O nas</a></li>
@@ -23,32 +25,57 @@
 
 <main>
     <section id="hero">
-        <h1>Witaj w Gaming Zone</h1>
-        <p>Najlepsza społeczność graczy w sieci.</p>
+        <div class="auth-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('login')">Logowanie</button>
+                <button class="tab-btn" onclick="openTab('register')">Rejestracja</button>
+            </div>
+
+            <div id="login" class="tab-content active">
+                <form id="login-form">
+                    <input type="email" id="l-email" placeholder="E-mail" required>
+                    <input type="password" id="l-password" placeholder="Hasło" required>
+                    <button type="submit" class="btn-main">Zaloguj się</button>
+                </form>
+            </div>
+
+            <div id="register" class="tab-content">
+                <form id="register-form">
+                    <input type="text" id="r-username" placeholder="Twoja Ksywka" required>
+                    <input type="email" id="r-email" placeholder="E-mail" required>
+                    <input type="password" id="r-password" placeholder="Hasło" required>
+                    <button type="submit" class="btn-main">Załóż konto</button>
+                </form>
+            </div>
+        </div>
     </section>
 
-    <section id="auth-section" class="auth-container">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="openTab('login')">Logowanie</button>
-            <button class="tab-btn" onclick="openTab('register')">Rejestracja</button>
+    <section class="bottom-content">
+        <div class="content-container">
+            <h2>Witaj w Gaming Zone</h2>
+           
+
         </div>
 
-        <div id="login" class="tab-content active">
-            <form id="login-form">
-                <input type="email" id="l-email" placeholder="E-mail" required>
-                <input type="password" id="l-password" placeholder="Hasło" required>
-                <button type="submit">Zaloguj się</button>
-            </form>
-        </div>
+        <div class="features">
+    <div class="feature-card">
+        <h3>Najnowsze Recenzje</h3>
+        <p>Sprawdź co sądzimy o najnowszym DLC do Elden Ring...</p>
+    </div>
+    <div class="feature-card">
+        <h3>Nadchodzące Premiery</h3>
+        <p>Kalendarz premier na nadchodzący miesiąc.</p>
+    </div>
+    <div class="feature-card">
+        <h3>Strefa Widza</h3>
+        <p>Najciekawsze streamy naszych użytkowników.</p>
+    </div>
+</div>
 
-        <div id="register" class="tab-content">
-            <form id="register-form">
-                <input type="text" id="r-username" placeholder="Twoja Ksywka" required>
-                <input type="email" id="r-email" placeholder="E-mail" required>
-                <input type="password" id="r-password" placeholder="Hasło" required>
-                <button type="submit">Załóż konto</button>
-            </form>
-        </div>
+
+
+
+
     </section>
 </main>
 
