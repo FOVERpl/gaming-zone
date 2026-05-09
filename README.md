@@ -1,15 +1,16 @@
 ## ⚖️ Legal Notice / Informacja Prawna
 
 **PL:**
-Wszelkie prawa zastrzeżone. Kod źródłowy, design oraz treści zawarte w tym repozytorium są własnością autora (Przemek Bierza, nick: FOVERpl) i podlegają ochronie prawnej.
+Wszelkie prawa zastrzeżone. Kod źródłowy, design (interfejs użytkownika), grafiki, zdjęcia oraz inne multimedia zawarte w tym repozytorium są wyłączną własnością autora (Przemek Bierza, nick: foverpl).
 
 **Od dnia 9 maja 2026 r. obowiązuje całkowity zakaz:**
-*   Kopiowania, powielania i rozpowszechniania kodu.
-*   Wykorzystywania projektu w celach komercyjnych oraz prywatnych.
-*   Modyfikowania i publikowania fragmentów kodu pod własnym nazwiskiem.
+*   Wykorzystywania, kopiowania i hostowania **zdjęć oraz plików graficznych** bez zgody.
+*   Kopiowania układu graficznego (UI/UX) i designu strony.
+*   Pobierania i używania zasobów multimedialnych w innych projektach.
 
-Każde nieautoryzowane użycie kodu po tej dacie będzie traktowane jako naruszenie praw autorskich, co skutkować będzie natychmiastowym zgłoszeniem DMCA Takedown oraz podjęciem kroków prawnych w celu uzyskania odszkodowania.
+Użycie jakiegokolwiek elementu (kodu lub grafiki) bez pisemnej zgody autora będzie skutkować zgłoszeniem naruszenia do dostawców hostingu (DMCA) oraz dochodzeniem roszczeń z tytułu bezprawnego korzystania z własności intelektualnej.
 
 **EN:**
 Copyright (c) 2026 Przemek Bierza (foverpl). All rights reserved.
-Effective immediately as of May 9, 2026, no one is permitted to use, copy, modify, or distribute this software or its source code without explicit written permission from the author. Unauthorized use will be subject to legal action and DMCA takedown notices.
+All source code, design elements, images, and media files are the exclusive property of the author. 
+Effective May 9, 2026, the use, reproduction, or distribution of any assets (including photos and UI design) is strictly prohibited without prior written consent.
