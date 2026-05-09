@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <title>Mój Profil - Gaming Zone</title>
     <link rel="stylesheet" href="style.css">
-     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <script src="auth.js"></script>
+    <!-- Najpierw biblioteka Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <nav>
@@ -21,8 +20,8 @@
         </div>
         <button id="logout-btn" style="background-color: #ff4d4d; color: white; padding: 10px; border: none; cursor: pointer;">Wyloguj się</button>
     </div>
- 
 
+    <!-- Twój skrypt ładujemy tylko raz na samym końcu -->
     <script src="auth.js"></script>
 </body>
 </html>
