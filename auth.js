@@ -58,11 +58,34 @@ async function handleLogout() {
 document.addEventListener('DOMContentLoaded', async () => {
     const session = await checkUserSession();
 
-    // Przycisk wyloguj (jeśli istnieje na stronie)
-    const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    // A. Obsługa wyświetlania danych na stronie profilu (profile.html)
+    if (session) {
+        const emailSpan = document.getElementById('display-email');
+        const usernameSpan = document.getElementById('display-username');
 
-    // Formularz Logowania
+        if (emailSpan) {
+            emailSpan.innerText = session.user.email;
+        }
+
+        if (usernameSpan) {
+            // Dane 'username' zapisane podczas rejestracji lądują w user_metadata
+            const nick = session.user.user_metadata?.username || "Brak nicku";
+            usernameSpan.innerText = nick;
+        }
+    } else {
+        // Jeśli nie ma sesji, a użytkownik próbuje wejść na profil - wyrzuć go na główną
+        if (window.location.pathname.includes('profile.html')) {
+            window.location.href = 'index.html';
+        }
+    }
+
+    // B. Przycisk wyloguj
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+
+    // C. Formularz Logowania (index.html)
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -74,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Formularz Rejestracji
+    // D. Formularz Rejestracji (index.html)
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
