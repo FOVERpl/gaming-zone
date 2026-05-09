@@ -10,11 +10,12 @@ async function checkUserSession() {
     const authSection = document.getElementById('auth-section');
 
     if (session) {
+        // Jeśli jest sesja, pokazujemy link do profilu i UKRYWAMY okno logowania
         if (profileLink) profileLink.style.display = 'block';
-        // Teraz authSection (nasze okno) zostanie ukryte, bo ma id="auth-section" w HTML
         if (authSection) authSection.style.display = 'none';
         return session;
     } else {
+        // Jeśli nie ma sesji, chowamy link do profilu i POKAZUJEMY okno logowania
         if (profileLink) profileLink.style.display = 'none';
         if (authSection) authSection.style.display = 'block';
         return null;
@@ -38,22 +39,16 @@ async function handleSignUp(email, password, username) {
     }
 }
 
-// 3. Obsługa Logowania
+// 3. Obsługa Logowania - TUTAJ ZMIANA
 async function handleLogin(email, password) {
     const { error } = await _supabase.auth.signInWithPassword({ email, password });
     
     if (error) {
         alert("Błąd logowania: " + error.message);
     } else {
-        // Po zalogowaniu odpalamy ponowne sprawdzenie sesji, 
-        // które dzięki poprawce w kroku 1 ukryje okno logowania.
+        // Zamiast teleportacji do profile.html, po prostu odświeżamy widoczność elementów
         await checkUserSession();
-        
-        // Jeśli jednak chcesz, żeby mimo wszystko przechodziło do profilu, zostaw to:
-        // window.location.href = 'profile.html';
-        
-        // Jeśli chcesz zostać na stronie głównej i tylko schować okno, 
-        // powyższa linijka window.location musi być usunięta lub zakomentowana.
+        console.log("Zalogowano pomyślnie. Okno ukryte.");
     }
 }
 
@@ -65,20 +60,18 @@ async function handleLogout() {
 
 // --- GŁÓWNA LOGIKA ---
 document.addEventListener('DOMContentLoaded', async () => {
-    // Sprawdzamy sesję na starcie - jeśli użytkownik jest zalogowany, okno zniknie od razu
     const session = await checkUserSession();
 
+    // Obsługa wyświetlania danych (jeśli elementy istnieją na stronie)
     if (session) {
         const emailSpan = document.getElementById('display-email');
         const usernameSpan = document.getElementById('display-username');
 
-        if (emailSpan) {
-            emailSpan.innerText = session.user.email;
-        }
+        if (emailSpan) emailSpan.innerText = session.user.email;
 
         if (usernameSpan) {
             try {
-                const { data: profile, error } = await _supabase
+                const { data: profile } = await _supabase
                     .from('profiles')
                     .select('username')
                     .eq('id', session.user.id)
@@ -86,21 +79,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 usernameSpan.innerText = profile?.username || session.user.user_metadata?.username || "Brak nicku";
             } catch (err) {
-                console.error("Błąd bazy danych:", err);
                 usernameSpan.innerText = session.user.user_metadata?.username || "Brak nicku";
             }
         }
-    } else {
-        if (window.location.pathname.includes('profile.html')) {
-            window.location.href = 'index.html';
-        }
     }
 
+    // Podpięcie przycisku wyloguj
     const logoutBtn = document.getElementById('logout-btn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', handleLogout);
-    }
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
 
+    // Formularz Logowania
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -112,6 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    // Formularz Rejestracji
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
         registerForm.addEventListener('submit', async (e) => {
