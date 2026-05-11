@@ -1,0 +1,77 @@
+/* Profil i Wyloguj */
+
+
+/* =========================================
+   1. GŁÓWNE STYLE I RESET
+   ========================================= */
+body { 
+    background: #121212; 
+    color: white; 
+    font-family: 'Segoe UI', Roboto, sans-serif; 
+    margin: 0; 
+    padding: 0;
+    overflow-x: hidden; /* Zapobiega przewijaniu na boki */
+}
+
+/* =========================================
+   2. NAWIGACJA (Dostosowana do screenów)
+   ========================================= */
+nav { 
+    background: #1f1f1f; 
+    padding: 0 5%; 
+    height: 70px;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 2px solid #00d4ff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00d4ff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.nav-links { 
+    display: flex; 
+    list-style: none; 
+    gap: 15px; 
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a { 
+    color: #00d4ff; 
+    text-decoration: none; 
+    font-weight: bold; 
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: white;
+    background: rgba(0, 212, 255, 0.2);
+}
+
+/* =========================================
+   3. SEKCJA HERO (STRONA GŁÓWNA)
+   ========================================= */
+#hero {
+    position: relative;
+    width: 100%;
+    height: 650px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("baner.png");
+    background-size: cover;
+    background-position: center;
+}
+
+
